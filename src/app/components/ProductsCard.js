@@ -1,19 +1,34 @@
 import styled from "styled-components";
 import Link from "next/link";
+import { useCart } from "../context/CartContext";
+import Image from "next/image";
 
 export default function ProductsCard({ product }) {
+  const { addItemToCart } = useCart();
+
+  const handleAddToCart = () => {
+    addItemToCart(product);
+    
+  };
+
   return (
-    <Link
-      style={{ color: "inherit", textDecoration: "none" }}
-      href={`/products/${product.id}`}
-    >
-      <Card>
-        <Image src={product.image} alt={product.title} />
+    <Card>
+      <Link
+        style={{ color: "inherit", textDecoration: "none" }}
+        href={`/products/${product.id}`}
+      >
+        <Image 
+        loading="lazy"
+        height={100}
+        width={100}
+        src={product.image} 
+        alt={product.title} />
         <ProductName>{product.title.slice(0, 50)}...</ProductName>
         <Price>R${product.price}</Price>
         <Description>{product.description.slice(0, 80)}...</Description>
-      </Card>
-    </Link>
+      </Link>
+      <AddToCartButton onClick={handleAddToCart}>Add to cart</AddToCartButton>
+    </Card>
   );
 }
 
@@ -33,12 +48,6 @@ const Card = styled.a`
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
-const Image = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  margin-bottom: 15px;
-`;
 
 const ProductName = styled.h2`
   font-size: 18px;
@@ -60,4 +69,18 @@ const Description = styled.p`
   line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
+`;
+
+const AddToCartButton = styled.button`
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: blue;
+  }
 `;

@@ -12,10 +12,10 @@ export default function ProductsGrid({ products }) {
 }
 
 const Grid = styled.div`
-  padding: 10px;
+  padding: 0px 100px 0px 100px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 20px;
+  gap: 40px;
   @media (min-width: 800px) {
     grid-template-columns: repeat(4, 1fr);
   }
