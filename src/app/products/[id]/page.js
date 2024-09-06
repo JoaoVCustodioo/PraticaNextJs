@@ -1,18 +1,18 @@
+"use client";
 
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function ProductDetails() {
-
-  const router = useRouter();
-  const { id } = router.query;
+export default function ProductDetails({ params }) {
+  const { id } = params;
   const [product, setProduct] = useState(null);
-
+  console.log(product);
   useEffect(() => {
     if (id) {
-      fetch(`https://fakestoreapi.com/api/products/${id}`)
+      fetch(`https://fakestoreapi.in/api/products/${id}`)
         .then((res) => res.json())
-        .then((data) => setProduct(data))
-        .catch((error) => console.error('Fetch error:', error));
+        .then((data) => setProduct(data.product))
+        .catch((error) => console.error("Fetch error:", error));
     }
   }, [id]);
 

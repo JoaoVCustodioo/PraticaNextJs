@@ -7,6 +7,7 @@ import ProductsGrid from "../components/ProductsGrid";
 import Dropdown from "../components/Dropdown";
 
 export default function Home() {
+  
   const [products, setProducts] = useState([]);
   const [searchedProducts, setSearchedProducts] = useState([]);
   const [, setSelectedCategory] = useState("");

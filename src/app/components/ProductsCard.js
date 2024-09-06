@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import Link from "next/link";
 
-
 export default function ProductsCard({ product }) {
   return (
-    <Link href={`/pages/products/${product.id}`}>
+    <Link href={`/products/${product.id}`}>
       <Card>
         <Image src={product.image} alt={product.title} />
         <ProductName>{product.title.slice(0, 50)}...</ProductName>
