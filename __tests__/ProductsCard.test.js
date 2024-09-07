@@ -1,35 +1,45 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import ProductsCard from '../components/ProductsCard'; 
-import { BrowserRouter as Router } from 'react-router-dom'; 
+import { render, screen, fireEvent } from "@testing-library/react";
+import ProductsCard from "../components/ProductsCard";
+import { CartProvider, useCart } from "../context/CartContext";
+import { act } from "react-dom/test-utils";
 
-const mockProduct = {
-  id: 1,
-  image: 'https://via.placeholder.com/150',
-  title: 'Test Product',
-  price: 9.99,
-  description: 'Test description',
-};
+const TestWrapper = ({ children }) => <CartProvider>{children}</CartProvider>;
 
-test('renders product card with correct data', () => {
+test("renders product details and handles add to cart", () => {
+  const addItemToCart = jest.fn();
+
   render(
-    <Router>
-      <ProductsCard product={mockProduct} />
-    </Router>
+    <TestWrapper>
+      <ProductsCard
+        product={{
+          id: 1,
+          image: "https://via.placeholder.com/100",
+          title: "Product Title",
+          price: 29.99,
+          description: "Product description goes here.",
+        }}
+      />
+    </TestWrapper>
   );
 
-  expect(screen.getByAltText('Test Product')).toBeInTheDocument();
-  expect(screen.getByText('Test Product')).toBeInTheDocument();
-  expect(screen.getByText('R$9.99')).toBeInTheDocument();
-  expect(screen.getByText('Test description')).toBeInTheDocument();
-});
+  expect(screen.getByAltText("Product Title")).toBeInTheDocument();
+  expect(screen.getByText("Product Title...")).toBeInTheDocument();
+  expect(screen.getByText("R$29.99")).toBeInTheDocument();
+  expect(
+    screen.getByText("Product description goes here...")
+  ).toBeInTheDocument();
 
-test('navigates to product details on click', () => {
-  const { container } = render(
-    <Router>
-      <ProductsCard product={mockProduct} />
-    </Router>
-  );
+  const button = screen.getByText("Add to cart");
+  expect(button).toBeInTheDocument();
 
-  fireEvent.click(container.querySelector('a'));
+  act(() => {
+    fireEvent.click(button);
+  });
+  expect(addItemToCart).toHaveBeenCalledWith({
+    id: 1,
+    image: "https://via.placeholder.com/100",
+    title: "Product Title",
+    price: 29.99,
+    description: "Product description goes here.",
+  });
 });

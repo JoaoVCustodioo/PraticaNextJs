@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export default function Dropdown({ options, onChange }) {
   return (
-    <StyledSelect onChange={onChange}>
-      <option value="">All categories</option>
-      {options.map((option) => (
-        <option key={option} value={option}>
-          {option}
-        </option>
-      ))}
-    </StyledSelect>
+      <StyledSelect onChange={(event) => onChange(event)}>
+        <option value="">All categories</option>
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </StyledSelect>
   );
 }
 
