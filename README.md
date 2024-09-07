@@ -7,4 +7,5 @@ SSH
 git clone git@github.com:JoaoVCustodioo/PraticaNextJs.git
 
 npm install
+
 npm run dev
